@@ -1,0 +1,8 @@
+@use 'variables' as *;
+
+// モバイルファースト: md 以上の画面幅に適用
+@mixin md {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
