@@ -22,7 +22,11 @@ export function SearchForm() {
         aria-label="郵便番号"
         onChange={(e) => setZipcode(e.target.value)}
       />
-      <button type="submit" className={styles.button}>
+      <button
+        type="submit"
+        className={styles.button}
+        disabled={!zipcode.trim()}
+      >
         検索
       </button>
     </form>
