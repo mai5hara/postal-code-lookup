@@ -11,6 +11,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
-    css: true,
+    // 自前の CSS Modules だけを処理する（Swiper などの外部 CSS は jsdom が解析できず警告が出るため）
+    css: { include: /\.module\.scss$/ },
   },
 })
