@@ -5,7 +5,7 @@ import { SearchForm } from './SearchForm'
 
 describe('SearchForm', () => {
   it('何も入力していないとき、ボタンが押せない状態になる', () => {
-    render(<SearchForm />)
+    render(<SearchForm onSearch={() => {}} isLoading={false} />)
 
     const button = screen.getByRole('button', { name: '検索' })
 
@@ -14,7 +14,7 @@ describe('SearchForm', () => {
 
   it('入力するとボタンが押せる状態になる', async () => {
     const user = userEvent.setup()
-    render(<SearchForm />)
+    render(<SearchForm onSearch={() => {}} isLoading={false} />)
 
     const input = screen.getByLabelText('郵便番号')
     await user.type(input, '1234567')
@@ -25,7 +25,7 @@ describe('SearchForm', () => {
 
   it('スペースだけを入力したとき、ボタンが押せない状態のままになる', async () => {
     const user = userEvent.setup()
-    render(<SearchForm />)
+    render(<SearchForm onSearch={() => {}} isLoading={false} />)
 
     const input = screen.getByLabelText('郵便番号')
     await user.type(input, '   ')
@@ -36,7 +36,7 @@ describe('SearchForm', () => {
 
   it('9文字入力しても8文字までしか入力できない', async () => {
     const user = userEvent.setup()
-    render(<SearchForm />)
+    render(<SearchForm onSearch={() => {}} isLoading={false} />)
 
     const input = screen.getByLabelText('郵便番号')
     await user.type(input, '123456789')

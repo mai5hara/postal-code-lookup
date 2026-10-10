@@ -1,12 +1,18 @@
 import { useState, type SubmitEvent } from 'react'
 import styles from './SearchForm.module.scss'
 
-export function SearchForm() {
+export function SearchForm({
+  onSearch,
+  isLoading,
+}: {
+  onSearch: (zipcode: string) => void
+  isLoading: boolean
+}) {
   const [zipcode, setZipcode] = useState('')
 
   const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(zipcode)
+    onSearch(zipcode)
   }
 
   return (
@@ -25,7 +31,7 @@ export function SearchForm() {
       <button
         type="submit"
         className={styles.button}
-        disabled={!zipcode.trim()}
+        disabled={!zipcode.trim() || isLoading}
       >
         検索
       </button>
