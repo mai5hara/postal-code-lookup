@@ -1,5 +1,5 @@
 import { afterEach, describe, it, expect, vi } from 'vitest'
-import { searchAddress } from './searchAddress'
+import { searchAddress, NotFoundError } from './searchAddress'
 
 afterEach(() => {
   vi.restoreAllMocks()
@@ -46,6 +46,15 @@ describe('searchAddress', () => {
     await expect(searchAddress('1111111')).rejects.toThrow(
       '郵便番号が存在しません。',
     )
+  })
+
+  it('住所が存在しないとき、NotFoundErrorを投げる', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(
+        JSON.stringify({ status: 200, message: null, results: null }),
+      ),
+    )
+    await expect(searchAddress('1111111')).rejects.toThrow(NotFoundError)
   })
 
   it('API が status 400 を返したとき、「エラーが発生しました。」のエラーを投げる', async () => {

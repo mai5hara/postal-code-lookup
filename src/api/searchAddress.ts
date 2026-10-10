@@ -1,5 +1,9 @@
 import type { AddressResult, ZipcloudResponse } from '../types/address'
 
+export class NotFoundError extends Error {
+  name = 'NotFoundError'
+}
+
 export const searchAddress = async (
   postalCode: string,
 ): Promise<AddressResult[]> => {
@@ -18,7 +22,7 @@ export const searchAddress = async (
   }
 
   if (!data.results || data.results.length === 0) {
-    throw new Error('郵便番号が存在しません。')
+    throw new NotFoundError('郵便番号が存在しません。')
   }
 
   return data.results.map((result) => ({
