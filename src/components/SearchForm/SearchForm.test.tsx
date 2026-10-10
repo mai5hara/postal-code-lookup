@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { SearchForm } from './SearchForm'
 
 describe('SearchForm', () => {
@@ -42,5 +42,42 @@ describe('SearchForm', () => {
     await user.type(input, '123456789')
 
     expect(input).toHaveValue('12345678')
+  })
+
+  it('入力して検索すると、入力した郵便番号で onSearch が呼ばれる', async () => {
+    const user = userEvent.setup()
+    const onSearch = vi.fn()
+    render(<SearchForm onSearch={onSearch} isLoading={false} />)
+
+    const input = screen.getByLabelText('郵便番号')
+    await user.type(input, '1000001')
+
+    const button = screen.getByRole('button', { name: '検索' })
+    await user.click(button)
+
+    expect(onSearch).toHaveBeenCalledWith('1000001')
+  })
+
+  it('通信中はボタンが押せない状態になる', async () => {
+    const user = userEvent.setup()
+    render(<SearchForm onSearch={() => {}} isLoading={true} />)
+
+    const input = screen.getByLabelText('郵便番号')
+    await user.type(input, '1000001')
+
+    const button = screen.getByRole('button', { name: '検索' })
+
+    expect(button).toBeDisabled()
+  })
+
+  it('スペースだけを入力して Enter キーを押しても、送信されない', async () => {
+    const user = userEvent.setup()
+    const onSearch = vi.fn()
+    render(<SearchForm onSearch={onSearch} isLoading={false} />)
+
+    await user.type(screen.getByLabelText('郵便番号'), '   ')
+    await user.keyboard('{Enter}')
+
+    expect(onSearch).not.toHaveBeenCalled()
   })
 })
