@@ -1,0 +1,19 @@
+@use '../../styles/functions' as *;
+
+.searchForm {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.input {
+  flex: 1;
+  padding: 4px 8px;
+  height: 46px;
+}
+
+.button {
+  width: 100px;
+}

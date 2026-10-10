@@ -1,7 +1,14 @@
 @use './styles/mixins' as *;
+@use './styles/functions' as *;
 
 .main {
   padding: 24px 16px;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(16px);
 
   @include md {
     padding: 48px 32px;
@@ -9,10 +16,18 @@
 }
 
 .title {
-  margin: 0 0 16px;
-  font-size: 1.5rem;
+  font-size: rem(24px);
 
   @include md {
-    font-size: 2rem;
+    font-size: rem(32px);
+  }
+}
+
+.description {
+  font-size: rem(14px);
+  text-align: center;
+
+  @include md {
+    font-size: rem(16px);
   }
 }
