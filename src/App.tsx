@@ -1,7 +1,10 @@
 import styles from './App.module.scss'
 import { SearchForm } from './components/SearchForm/SearchForm'
+import { useAddressSearch } from './hooks/useAddressSearch'
 
 function App() {
+  const { addresses, error, isLoading, search } = useAddressSearch()
+
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>住所検索</h1>
@@ -12,7 +15,19 @@ function App() {
         <br />
         （000-0000, 0000000の形式で入力してください。）
       </p>
-      <SearchForm />
+      <SearchForm onSearch={search} isLoading={isLoading} />
+      {error && !isLoading && <p role="alert">{error}</p>}
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        addresses.map((address) => (
+          <div key={`${address.zipcode}-${address.address}`}>
+            <p>{address.zipcode}</p>
+            <p>{address.address}</p>
+            <p>{address.addressKana}</p>
+          </div>
+        ))
+      )}
     </main>
   )
 }
