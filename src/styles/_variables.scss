@@ -1,8 +1,16 @@
-// デザイントークン
 $color-text: #1f2328;
-$color-bg: #fff;
-$color-primary: #2563eb;
-$color-primary-hover: #1d4ed8;
+$color-text-muted: #59636e;
+$color-bg: #f6f8fa;
+$color-surface: #fff;
+$color-border: #d1d9e0;
+$color-primary: #0b72c4;
+$color-primary-hover: #1464a6;
+$color-primary-subtle: #eff4ff;
+$color-disabled: #c4cbd3;
+$color-error: #d1242f;
+
+$radius: 8px;
+$shadow-card: 0 1px 3px rgb(31 35 40 / 8%);
 
 $font-family-base:
   system-ui,

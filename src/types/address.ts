@@ -20,3 +20,8 @@ export interface AddressResult {
   address: string
   addressKana: string
 }
+
+export interface SearchHistory {
+  id: string
+  addresses: AddressResult[]
+}

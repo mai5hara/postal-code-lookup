@@ -1,3 +1,4 @@
+import eslintReact from '@eslint-react/eslint-plugin'
 import js from '@eslint/js'
 import eslintConfigPrettier from 'eslint-config-prettier/flat'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
@@ -14,6 +15,9 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
+      // key の付け忘れなど React 固有のミスを検出（hooks のルールは react-hooks 側に任せる）
+      eslintReact.configs['recommended-typescript'],
+      eslintReact.configs['disable-conflict-eslint-plugin-react-hooks'],
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
       jsxA11y.flatConfigs.recommended,
