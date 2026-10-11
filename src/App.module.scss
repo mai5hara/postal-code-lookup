@@ -1,18 +1,29 @@
 @use './styles/mixins' as *;
 @use './styles/functions' as *;
+@use './styles/variables' as *;
 
 .main {
-  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
   max-width: 600px;
+  width: 100%;
   margin: 0 auto;
+  padding: 32px 16px;
+
+  @include md {
+    max-width: 960px;
+    gap: 40px;
+    padding: 56px 32px;
+  }
+}
+
+.header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: rem(16px);
-
-  @include md {
-    padding: 48px 32px;
-  }
+  gap: 8px;
+  text-align: center;
 }
 
 .title {
@@ -25,9 +36,67 @@
 
 .description {
   font-size: rem(14px);
-  text-align: center;
+  color: $color-text-muted;
 
   @include md {
     font-size: rem(16px);
+  }
+}
+
+.searchSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.error {
+  font-size: rem(14px);
+  color: $color-error;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  box-shadow: $shadow-card;
+  padding: 16px;
+}
+
+.resultItem + .resultItem {
+  padding-top: 16px;
+  border-top: 1px solid $color-border;
+}
+
+.loading {
+  text-align: center;
+  color: $color-text-muted;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionTitle {
+  font-size: rem(18px);
+
+  @include md {
+    font-size: rem(20px);
+  }
+}
+
+.emptyHistory {
+  font-size: rem(14px);
+  color: $color-text-muted;
+}
+
+.mobileOnlyBr {
+  @include md {
+    display: none;
   }
 }

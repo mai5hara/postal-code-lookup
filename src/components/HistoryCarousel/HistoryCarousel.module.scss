@@ -1,0 +1,97 @@
+@use '../../styles/mixins' as *;
+@use '../../styles/variables' as *;
+
+.carousel {
+  // Swiper は親の幅からスライド幅を計算するため、幅を明示する
+  width: 100%;
+  min-width: 0;
+}
+
+.historyCardList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+
+  @include md {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+.historyCardItem {
+  min-width: 0;
+}
+
+.controls {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 16px auto 0;
+}
+
+.navButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: $color-primary;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  @media (hover: hover) {
+    &:hover:not(:disabled) {
+      background-color: $color-primary-subtle;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    color: $color-disabled;
+    cursor: not-allowed;
+  }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bullet {
+  // タップしやすいよう、見た目より広い当たり判定を持たせる
+  position: relative;
+  width: 10px;
+  height: 10px;
+  margin: 0 6px;
+  padding: 0;
+  background-color: $color-disabled;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &::after {
+    position: absolute;
+    inset: -12px;
+    content: '';
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+  &[aria-current='true'] {
+    background-color: $color-primary;
+  }
+}

@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { searchAddress, NotFoundError } from '../api/searchAddress'
-import type { AddressResult } from '../types/address'
+import type { AddressResult, SearchHistory } from '../types/address'
 import { validatePostalCode } from '../utils/validatePostalCode'
 
 export const useAddressSearch = () => {
   const [addresses, setAddresses] = useState<AddressResult[]>([])
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [history, setHistory] = useState<SearchHistory[]>([])
 
   const search = async (postalCode: string) => {
     try {
@@ -22,6 +23,10 @@ export const useAddressSearch = () => {
 
       const addressResult = await searchAddress(postalCode)
       setAddresses(addressResult)
+      setHistory((prev) => [
+        { id: crypto.randomUUID(), addresses: addressResult },
+        ...prev,
+      ])
     } catch (error) {
       setError(
         error instanceof NotFoundError
@@ -33,5 +38,5 @@ export const useAddressSearch = () => {
     }
   }
 
-  return { addresses, error, isLoading, search }
+  return { addresses, error, isLoading, search, history }
 }
