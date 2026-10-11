@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { searchAddress, NotFoundError } from '../api/searchAddress'
 import type { AddressResult, SearchHistory } from '../types/address'
 import { validatePostalCode } from '../utils/validatePostalCode'
@@ -8,6 +8,8 @@ export const useAddressSearch = () => {
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [history, setHistory] = useState<SearchHistory[]>([])
+  // crypto.randomUUID は https / localhost 以外（実機から LAN の IP で開いた場合など）では使えないため、履歴の id は連番で採番する
+  const nextHistoryIdRef = useRef(0)
 
   const search = async (postalCode: string) => {
     try {
@@ -23,10 +25,9 @@ export const useAddressSearch = () => {
 
       const addressResult = await searchAddress(postalCode)
       setAddresses(addressResult)
-      setHistory((prev) => [
-        { id: crypto.randomUUID(), addresses: addressResult },
-        ...prev,
-      ])
+      // 更新関数は StrictMode で 2 回呼ばれることがあるため、id は関数の外で採番する
+      const id = String(nextHistoryIdRef.current++)
+      setHistory((prev) => [{ id, addresses: addressResult }, ...prev])
     } catch (error) {
       setError(
         error instanceof NotFoundError
