@@ -20,10 +20,8 @@ export function HistoryCarousel({ history }: { history: SearchHistory[] }) {
   const [isBeginning, setIsBeginning] = useState(true)
   const [isEnd, setIsEnd] = useState(true)
 
-  // 最初・最後のページかどうかは、ページ移動だけでなく
-  // 履歴の追加でページ数が変わったときや画面幅の変化でも変わる。
-  // reachEnd / fromEdge は 1 ページ → 2 ページに増えたとき（ロック解除時）に発火しないため、
-  // 位置の再計算のたびに必ず発火する progress イベントで更新する
+  // 最初・最後のページかどうかは、ページ移動だけでなく履歴の追加でページ数が変わったときや画面幅の変化でも変わる。
+  // reachEnd / fromEdge は 1 ページ → 2 ページに増えたとき（ロック解除時）に発火しないため、位置の再計算のたびに必ず発火する progress イベントで更新する
   const updateEdges = (instance: SwiperInstance) => {
     setIsBeginning(instance.isBeginning)
     setIsEnd(instance.isEnd)
