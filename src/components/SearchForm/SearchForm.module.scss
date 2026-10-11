@@ -1,19 +1,58 @@
-@use '../../styles/functions' as *;
+@use '../../styles/variables' as *;
 
 .searchForm {
   display: flex;
-  flex-direction: row;
   gap: 8px;
   width: 100%;
-  max-width: 400px;
+  max-width: 480px;
 }
 
 .input {
   flex: 1;
-  padding: 4px 8px;
-  height: 46px;
+  min-width: 0;
+  height: 48px;
+  padding: 0 12px;
+  font-size: 16px;
+  color: $color-text;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:focus-visible {
+    border-color: $color-primary;
+    outline: 2px solid $color-primary;
+    outline-offset: -1px;
+  }
 }
 
 .button {
-  width: 100px;
+  flex-shrink: 0;
+  width: 96px;
+  height: 48px;
+  font-weight: 600;
+  color: $color-surface;
+  background-color: $color-primary;
+  border: none;
+  border-radius: $radius;
+  cursor: pointer;
+
+  @media (hover: hover) {
+    &:hover:not(:disabled) {
+      background-color: $color-primary-hover;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    background-color: $color-disabled;
+    cursor: not-allowed;
+  }
 }
